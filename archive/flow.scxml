@@ -1,0 +1,46 @@
+<flow>
+
+    <datamodel>
+      <data id="claimantNameAddress" type="textArea"></data>
+      <data id="pillColour" type="oneOf"></data>
+    </datamodel>
+
+    <!-- ================================================== -->
+
+    <state id="start">
+      <transition target="claimantNameAddress"></transition>
+    </state>
+
+    <!-- ================================================== -->
+
+    <state id="claimantNameAddress">
+      <transition target="pill"></transition>
+      <bind name="claimantNameAddress"></bind>
+    </state>
+
+    <!-- ================================================== -->
+
+    <state id="pill">
+      <transition target="red" if="pillColour" is="'red'"></transition>
+      <transition target="blue" if="pillColour" is="'blue'"></transition>
+      <bind name="pillColour"></bind>
+    </state>
+
+    <!-- ================================================== -->
+
+    <state id="red">
+      <transition target="end"></transition>
+    </state>
+
+    <!-- ================================================== -->
+
+    <state id="blue">
+      <transition target="end"></transition>
+    </state>
+
+    <!-- ================================================== -->
+
+    <state id="end">
+    </state>
+
+</flow>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <script src="jquery.js" type="application/javascript"></script>
+    <script src="flow.js" type="application/javascript"></script>
+    <script type="application/javascript">
+       $(document).ready(function(){ flow.start("start"); });
+    </script>
+<link type="text/css" rel="stylesheet" media="screen" href="https://assets.digital.cabinet-office.gov.uk/static/application-933c57f666fda045b7b793af9ac0f457.css"/>
+<link type="text/css" rel="stylesheet" media="print" href="https://assets.digital.cabinet-office.gov.uk/static/print-a250641f33ac06dba78975b0c65f8ac9.css"/>
+<link type="text/css" rel="stylesheet" media="all" href="https://assets.digital.cabinet-office.gov.uk/static/fonts-0fb6b917e34e45c93a44eec72dcc21de.css"/>
+<link type="image/x-icon" href="https://assets.digital.cabinet-office.gov.uk/static/favicon-447e4ac1ab790342660eacfe3dcce264.ico" rel="shortcut icon"/>
+    <title>C100 form</title>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+  </head>
+  <body>
+
+<header id="global-header" class="group" role="banner"><div class="header-wrapper group"><a id="logo" title="Go to the gov.uk homepage" href="/"><img alt="GOV.UK" src="https://assets.digital.cabinet-office.gov.uk/static/gov.uk_logotype-2x-24145374d271079f08d96c618cc8d4a5.png"></a><a class="button search-toggle" href="#search">Search</a><form id="search" class="site-search" role="search" method="get" action="/search"><label class="visuallyhidden" for="site-search-text">Search</label><input id="site-search-text" type="search" title="Search" name="q"><input class="button" type="submit" value="Search"></form></div></header>
+
+
+  <header class="page-header group">
+    <hgroup>
+      <h1>C100</h1>
+      <p>Application under the Children Act 1989 for a residence,
+      contact, prohibited steps, specific issue section 8 order or to
+      vary or discharge a section 8 order</p>
+    </hgroup>
+  </header>
+
+<div class="done-questions">
+<div class="start-again">
+<a href="javascript:location.reload()">Start again</a>
+</div>
+<ol id="summary">
+</ol>
+</div>
+
+    <!-- ================================================== -->
+
+    <div class="step" id="start">
+      <button type="submit" class="medium button">start</button>
+    </div>
+
+    <!-- ================================================== -->
+
+    <div class="step" id="summary_permission">
+      <h2>Have you applied to the court for permission to make this application?</h2>
+      <input type="radio" name="has_applied" value="yes"/>&nbsp;Yes<br/>
+      <input type="radio" name="has_applied" value="not_required"/>&nbsp;Permission not required<br/>
+
+      <button type="submit" class="medium button">Continue</button>
+    </div>
+
+    <!-- ================================================== -->
+
+    <div class="step" id="summary_applicant">
+      <h2>What is your name (the applicant(s))?</h2>
+      <textarea cols="40" rows="5" id="name"></textarea><br/>
+      <button type="submit" class="medium button">Continue</button>
+    </div>
+
+    <!-- ================================================== -->
+
+    <div class="step" id="summary_respondent">
+      <h2>What is the respondent's name?</h2>
+      <textarea cols="40" rows="5" id="name"></textarea><br/>
+
+      <button type="submit" class="medium button">Continue</button>
+    </div>
+
+    <!-- ================================================== -->    
+
+    <div class="step" id="end">
+      <h2>Thank you.</h2>
+    </div>
+
+    </body>
+</html>
