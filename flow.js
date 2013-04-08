@@ -20,6 +20,7 @@ flow.summarise = function() {
 flow.start = function (initialStepId) {
   $("div.step").on("click", "button[type=submit]", flow.stepSubmittedCallback);
   flow.showStep(initialStepId);
+//  flow.gotoStep(3);
 };
 
 flow.showStep = function(stepId) {
@@ -45,6 +46,7 @@ flow.stepSubmittedCallback = function(e) {
   var data = {question:"", answer:{}};
   data['question'] = $("#"+stepId+" h2").html();
   $("#"+stepId+" textarea").each(function(index, textarea) { data['answer'][textarea.id] = textarea.value; });
+  $("#"+stepId+" input:text").each(function(index, text) { data['answer'][text.id] = text.value; });
   $("#"+stepId+" input:radio:checked").each(function(index, radioButton) { 
       data['answer'][radioButton.name] = radioButton.value; 
   });
@@ -92,6 +94,6 @@ util.objTextToString = function(object) {
     if (t==="number" || t==="string") { result.push(" "+val);}
     if (t==="object") { result.push(" "+util.objToString(val));}
   });
-  return result.join('');
+  return result.join(', ');
 };
 

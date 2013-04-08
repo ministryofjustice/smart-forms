@@ -7,9 +7,13 @@
 }
 
 button {
-    margin-top: 1em;
+  margin-top: 1em;
 }
 
 .done-questions {
-    display: none;
+  display: none;
+}
+
+input[type=text] {
+  min-width: 0;
 }

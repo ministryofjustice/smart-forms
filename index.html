@@ -70,8 +70,48 @@
 
     <!-- ================================================== -->    
 
+    <div class="step" id="child_1">
+      <h2>First child</h2>
+      Name: <input type="text" id="name"/><br/>
+      Date of birth: <input type="text" id="dob-day" size="2" maxlength="2"/> / <input type="text" id="dob-month" size="2" maxlength="2"/> / <input type="text" id="dob-year" maxlength="4" size="4"/><br/>
+      Gender:
+        <input type="radio" name="gender" value="male"/>&nbsp;Male
+        <input type="radio" name="gender" value="female"/>&nbsp;Female<br/>
+      Order(s) applied form: <input type="text" id="order"/><br/>
+
+      <button type="submit" class="medium button">Continue</button>
+    </div>
+
+    <!-- ================================================== -->    
+    <div class="step" id="more-children-1">
+      <h2>Are there more children?</h2>
+
+      <input type="radio" name="more1" value="yes"/>&nbsp;Yes
+      <input type="radio" name="more1" value="no"/>&nbsp;No<br/>
+
+      <button type="submit" class="medium button">Continue</button>
+
+      <transition target="child_2" if="more1" is="yes"/>
+      <transition target="end" if="more1" is="no"/>
+    </div>
+
+    <!-- ================================================== -->    
+    <div class="step" id="child_2">
+      <h2>Second child</h2>
+      Name: <input type="text" id="name"/><br/>
+      Date of birth: <input type="text" id="dob-day" size="2" maxlength="2"/> / <input type="text" id="dob-month" size="2" maxlength="2"/> / <input type="text" id="dob-year" maxlength="4" size="4"/><br/>
+      Gender:
+        <input type="radio" name="gender" value="male"/>&nbsp;Male
+        <input type="radio" name="gender" value="female"/>&nbsp;Female<br/>
+      Order(s) applied form: <input type="text" id="order"/><br/>
+
+      <button type="submit" class="medium button">Continue</button>
+    </div>
+
+    <!-- ================================================== -->    
+
     <div class="step" id="end">
-      <h2>Thank you.</h2>
+      <h2>All done. Thank you.</h2>
     </div>
 
     </body>
