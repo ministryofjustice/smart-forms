@@ -54,10 +54,17 @@ flow.stepSubmittedCallback = function(e) {
     datamodel.push(data);
   }
 
+  // has the user pressed a button with a target on it?
+  if (e.target.getAttribute("target")) {
+    flow.hideStep(stepId);
+    flow.showStep(e.target.getAttribute("target"));
+    return;
+  }
+
   flow.summarise();
 
-  // transitions
-  transitions = $("#" + stepId + " transition");
+  // else, inspect the form's transitions
+  transitions = $("#" + stepId + " transition, #" + stepId);
   for (i=0; i < transitions.length; i++) {
     transition = transitions[i];
     cond = transition.getAttribute("if");
@@ -69,6 +76,7 @@ flow.stepSubmittedCallback = function(e) {
       }
     } else {
       next = transition.getAttribute("target");
+      break;
     }
   }
   if (next) {

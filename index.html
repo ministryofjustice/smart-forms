@@ -38,7 +38,11 @@
     <!-- ================================================== -->
 
     <div class="step" id="start">
-      <button type="submit" class="medium button">start</button>
+
+      <button type="submit" class="medium button" target="summary_permission">start</button>
+      <button type="submit" class="medium button" target="end">end</button>
+
+<!--      <button type="submit" class="medium button">start</button> -->
     </div>
 
     <!-- ================================================== -->
@@ -86,13 +90,9 @@
     <div class="step" id="more-children-1">
       <h2>Are there more children?</h2>
 
-      <input type="radio" name="more1" value="yes"/>&nbsp;Yes
-      <input type="radio" name="more1" value="no"/>&nbsp;No<br/>
+      <button type="submit" class="medium button" target="child_2">Yes</button>
+      <button type="submit" class="medium button" target="end">No</button>
 
-      <button type="submit" class="medium button">Continue</button>
-
-      <transition target="child_2" if="more1" is="yes"/>
-      <transition target="end" if="more1" is="no"/>
     </div>
 
     <!-- ================================================== -->    
