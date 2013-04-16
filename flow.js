@@ -1,107 +1,62 @@
 var $;
 var flow = {};
-var datamodel = [];
+var data = {};
+var i;
 
-flow.summarise = function() {
-  var value, i, markup = [];
-  if (datamodel.length>0) {
-    for (i=0; i<datamodel.length; i++) {
-      value = datamodel[i];
-      var answer = util.objTextToString(value['answer']);
-      markup.push("<li class='done'><h3 class='question'>" + value['question'] + "</h3><div class='answer'>" + answer + "</div><p class='undo'><a href='javascript:flow.gotoStep("+i+")'>Change this answer</a></p></li>");
-    }
-    $("#summary").html(markup.join(''));
-    $(".done-questions").css("display","block");
-  } else {
-    $(".done-questions").css("display","none");
-  }
-};
-
-flow.start = function (initialStepId) {
-  $("div.step").on("click", "button[type=submit]", flow.stepSubmittedCallback);
-  flow.showStep(initialStepId);
-//  flow.gotoStep(3);
-};
-
-flow.showStep = function(stepId) {
-  $("#" + stepId).css('display','block');
-};
+flow.history = [];
 
 flow.hideStep = function(stepId) {
-  $("#" + stepId).css('display','none');
-};
+  $("#"+stepId).css("display", "none");
+}
 
-flow.gotoStep = function(i) {
-  datamodel.splice(i,datamodel.length-i+1);
-  $(".step").css('display','none');
-  $("div.step:nth("+(i+1)+")").css('display', 'block');
-  flow.summarise();
-};
-
-flow.stepSubmittedCallback = function(e) {
-  var stepsIds=[], next, i, is, cond, substeps, transition, transitions, parentStep;
-  var stepId = $(e.target).closest(".step").attr("id");
-
-  // collect data
-  var data = {question:"", answer:{}};
-  data['question'] = $("#"+stepId+" h2").html();
-  $("#"+stepId+" textarea").each(function(index, textarea) { data['answer'][textarea.id] = textarea.value; });
-  $("#"+stepId+" input:text").each(function(index, text) { data['answer'][text.id] = text.value; });
-  $("#"+stepId+" input:radio:checked").each(function(index, radioButton) { 
-      data['answer'][radioButton.name] = radioButton.value; 
-  });
-  if (!$.isEmptyObject(data['answer'])) {
-    datamodel.push(data);
+flow.generateSummary = function() {
+  // walk down the history and write the data of each step
+  var items = [];
+  $("#summary").html();
+  for (i=0; i<flow.history.length; i++) {
+    stepId = flow.history[i];
+    console.log(data[stepId]);
+    items.push("<li>"+stepId+": "+data[stepId]+"</li>");
   }
+  $("#summary").html(items.join(''));
+  $(".done-questions").css("display","block")
+}
 
-  // has the user pressed a button with a target on it?
-  if (e.target.getAttribute("target")) {
-    flow.hideStep(stepId);
-    flow.showStep(e.target.getAttribute("target"));
-    return;
+flow.showStep = function(stepId) {
+  var thisStep = $("#"+stepId);
+  var conditionalText = $("#"+stepId+" div[cond]");
+
+  flow.generateSummary();
+  for (i=0; i<conditionalText.length;i++) {
+    item = conditionalText[i];
+    item.style.display = eval(item.getAttribute("cond")) ? "block" : "none";
   }
+  thisStep.css("display", "block");
+}
 
-  flow.summarise();
+flow.enterStep = function(stepId) {
+  flow.showStep(stepId);
+  if (!$("#"+stepId).hasClass("final")) {
+    // if this isn't a final step, put an event handler on each button
+    $("#"+stepId+" button[type=submit]").on("click", function() {
+      // update data model
+      data[stepId] = {};
+      $("#"+stepId+" textarea").each(function(index, textarea) { data[stepId][textarea.id] = textarea.value; });
+      $("#"+stepId+" input:text").each(function(index, text) { data[stepId][text.id] = text.value; });
+      $("#"+stepId+" input:radio:checked").each(function(index, radioButton) { 
+        data[stepId][radioButton.name] = radioButton.value;
+      }); 
+      // add to history
+      flow.history.push(stepId);
 
-  // else, inspect the form's transitions
-  transitions = $("#" + stepId + " transition, #" + stepId);
-  for (i=0; i < transitions.length; i++) {
-    transition = transitions[i];
-    cond = transition.getAttribute("if");
-    is = transition.getAttribute("is");
-    if (cond) {
-      if (is && data['answer'][cond] == is) {
-        next = transition.getAttribute("target");
-        break;
+      // find the next step
+      next = eval($(this).attr("target"));
+      if (next) { 
+        flow.hideStep(stepId);
+        flow.enterStep(next);
+      } else {
+        console.log("error. No transition found");
       }
-    } else {
-      next = transition.getAttribute("target");
-      break;
-    }
+    });
   }
-  if (next) {
-    flow.hideStep(stepId);
-    flow.showStep(next);
-  } else {
-    next = $("#" + stepId).next("div.step");
-    if (next) {
-      flow.hideStep(stepId);
-      flow.showStep(next.attr("id"));
-    } else {
-      console.log("error: no transition. Trying next step in document order");
-    }
-  }
-};
-
-var util = { };
-
-util.objTextToString = function(object) {
-  var result=[];
-  $.each(object, function(key, val) {
-    var t = typeof val;
-    if (t==="number" || t==="string") { result.push(" "+val);}
-    if (t==="object") { result.push(" "+util.objToString(val));}
-  });
-  return result.join(', ');
-};
-
+}

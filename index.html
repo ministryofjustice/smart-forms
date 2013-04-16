@@ -4,13 +4,13 @@
     <script src="jquery.js" type="application/javascript"></script>
     <script src="flow.js" type="application/javascript"></script>
     <script type="application/javascript">
-       $(document).ready(function(){ flow.start("start"); });
+       $(document).ready(function(){ flow.enterStep("start"); });
     </script>
 <link type="text/css" rel="stylesheet" media="screen" href="https://assets.digital.cabinet-office.gov.uk/static/application-933c57f666fda045b7b793af9ac0f457.css"/>
 <link type="text/css" rel="stylesheet" media="print" href="https://assets.digital.cabinet-office.gov.uk/static/print-a250641f33ac06dba78975b0c65f8ac9.css"/>
 <link type="text/css" rel="stylesheet" media="all" href="https://assets.digital.cabinet-office.gov.uk/static/fonts-0fb6b917e34e45c93a44eec72dcc21de.css"/>
 <link type="image/x-icon" href="https://assets.digital.cabinet-office.gov.uk/static/favicon-447e4ac1ab790342660eacfe3dcce264.ico" rel="shortcut icon"/>
-    <title>C100 form</title>
+    <title>APPLICATION FOR COMPENSATION FOR WRONGFUL CONVICTION</title>
     <link rel="stylesheet" type="text/css" href="main.css"/>
   </head>
   <body>
@@ -20,10 +20,12 @@
 
   <header class="page-header group">
     <hgroup>
-      <h1>C100</h1>
-      <p>Application under the Children Act 1989 for a residence,
-      contact, prohibited steps, specific issue section 8 order or to
-      vary or discharge a section 8 order</p>
+      <h1>APPLICATION FOR COMPENSATION FOR WRONGFUL CONVICTION</h1>
+      <p>This form must be used by anyone who wants to apply to the Justice Secretary for a 
+payment of compensation in respect of:</p>
+<ul><li>a conviction for which a free pardon has been granted;</li>
+<li>a conviction which has been quashed on an out-of-time appeal.</li></ul>
+
     </hgroup>
   </header>
 
@@ -38,80 +40,82 @@
     <!-- ================================================== -->
 
     <div class="step" id="start">
-
-      <button type="submit" class="medium button" target="summary_permission">start</button>
-      <button type="submit" class="medium button" target="end">end</button>
-
-<!--      <button type="submit" class="medium button">start</button> -->
+      <button type="submit" class="medium button" target="'isApplicant'">start</button>
     </div>
 
     <!-- ================================================== -->
 
-    <div class="step" id="summary_permission">
-      <h2>Have you applied to the court for permission to make this application?</h2>
-      <input type="radio" name="has_applied" value="yes"/>&nbsp;Yes<br/>
-      <input type="radio" name="has_applied" value="not_required"/>&nbsp;Permission not required<br/>
+    <div class="step" id="isApplicant">
+      <label>Are you the applicant?</label><br/>
+      <input type="radio" name="isApplicant" value="yes"/>Yes<br/>
+      <input type="radio" name="isApplicant" value="no"/>No, I am representing the applicant<br/>
 
-      <button type="submit" class="medium button">Continue</button>
+      <button type="submit" class="medium button" target="data.isApplicant==='yes' ? 'applicant' : 'isDeceased' ">Continue</button>
     </div>
 
     <!-- ================================================== -->
 
-    <div class="step" id="summary_applicant">
-      <h2>What is your name (the applicant(s))?</h2>
-      <textarea cols="40" rows="5" id="name"></textarea><br/>
-      <button type="submit" class="medium button">Continue</button>
+    <!-- 1A -->
+    <div class="step" id="applicant">
+      <h2>Your details</h2>
+      <div cond="data.isApplicant === 'yes'"><h2>Your Name</h2></div>
+      <div cond="data.isApplicant === 'no'"><h2>Name of the person you are representing</h2></div>
+      <input type="text" id="applicantName"/><br/>
+      <button type="submit" class="medium button" target="'case'">Continue</button>
     </div>
 
     <!-- ================================================== -->
 
-    <div class="step" id="summary_respondent">
-      <h2>What is the respondent's name?</h2>
-      <textarea cols="40" rows="5" id="name"></textarea><br/>
+    <div class="step" id="isDeceased">
+      <h2>Is the applicant deceased?</h2>
+      <input type="radio" name="isDeceased" value="yes"/>&nbsp;Yes<br/>
+      <input type="radio" name="isDeceased" value="no"/>&nbsp;No<br/>
 
-      <button type="submit" class="medium button">Continue</button>
+      <button type="submit" class="medium button" target="data.isDeceased === 'yes' ? 'deceased' : 'representative'">Continue</button>
+    </div>
+
+    <!-- ================================================== -->
+
+    <!-- 1B -->
+    <div class="step" id="representative">
+      <h2>Your details (as the representative)</h2>
+      <h3>Name</h3>
+      <input type="text" id="representativeName"/><br/>
+      <button type="submit" class="medium button" target="'case'">Continue</button>
     </div>
 
     <!-- ================================================== -->    
 
-    <div class="step" id="child_1">
-      <h2>First child</h2>
-      Name: <input type="text" id="name"/><br/>
-      Date of birth: <input type="text" id="dob-day" size="2" maxlength="2"/> / <input type="text" id="dob-month" size="2" maxlength="2"/> / <input type="text" id="dob-year" maxlength="4" size="4"/><br/>
-      Gender:
-        <input type="radio" name="gender" value="male"/>&nbsp;Male
-        <input type="radio" name="gender" value="female"/>&nbsp;Female<br/>
-      Order(s) applied form: <input type="text" id="order"/><br/>
-
-      <button type="submit" class="medium button">Continue</button>
-    </div>
-
-    <!-- ================================================== -->    
-    <div class="step" id="more-children-1">
-      <h2>Are there more children?</h2>
-
-      <button type="submit" class="medium button" target="child_2">Yes</button>
-      <button type="submit" class="medium button" target="end">No</button>
-
-    </div>
-
-    <!-- ================================================== -->    
-    <div class="step" id="child_2">
-      <h2>Second child</h2>
-      Name: <input type="text" id="name"/><br/>
-      Date of birth: <input type="text" id="dob-day" size="2" maxlength="2"/> / <input type="text" id="dob-month" size="2" maxlength="2"/> / <input type="text" id="dob-year" maxlength="4" size="4"/><br/>
-      Gender:
-        <input type="radio" name="gender" value="male"/>&nbsp;Male
-        <input type="radio" name="gender" value="female"/>&nbsp;Female<br/>
-      Order(s) applied form: <input type="text" id="order"/><br/>
-
-      <button type="submit" class="medium button">Continue</button>
+    <!-- 1C -->
+    <div class="step" id="deceased">
+      <h2>Your Details (as the representative)</h2>
+      <h3>Name</h3>
+      <input type="text" id="deceasedRepresentative"/><br/>
+      <button type="submit" class="medium button" target="'case'">Continue</button>
     </div>
 
     <!-- ================================================== -->    
 
-    <div class="step" id="end">
-      <h2>All done. Thank you.</h2>
+    <!-- Part 2 -->
+    <div class="step" is="case">
+      <h3>What we need to know about your case</h3>
+      <p>What offence(s) were you accused of?</p>
+      <textarea cols="40" rows="5" id="offences"></textarea><br/>
+      <button type="submit" class="medium button" target="'end'">Continue</button>
+    </div>
+
+
+    <!-- ================================================== -->    
+
+
+    <div class="step final" id="end">
+      <p>please send this form at the following address:</p>
+<address>Better Trials Unit
+Miscarriage of Justice Team
+Post point 7.37
+102 Petty France
+London
+SW1H 9AJ.</address>
     </div>
 
     </body>
