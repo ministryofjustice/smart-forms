@@ -48,8 +48,8 @@ payment of compensation in respect of:</p>
       <input type="radio" name="isApplicant" value="no"/>No, I am representing the applicant<br/>
 
       <button type="submit" class="medium button">Continue</button>
-      <transition target="applicant" if="data.isApplicant.answer.isApplicant==='yes'"/>
-      <transition target="isDeceased" if="data.isApplicant.answer.isApplicant==='no'"/>
+      <transition target="applicant" if="data.start.answer.isApplicant==='yes'"/>
+      <transition target="isDeceased" if="data.start.answer.isApplicant==='no'"/>
     </div>
 
     <!-- ================================================== -->
@@ -59,7 +59,7 @@ payment of compensation in respect of:</p>
       <label>Your details</label><br/>
       <div cond="data.isApplicant === 'yes'"><h2>Your Name</h2></div>
       <div cond="data.isApplicant === 'no'"><h2>Name of the person you are representing</h2></div>
-      <input type="text" id="applicantName"/><br/>
+      <input type="text" name="applicantName"/><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="case"/>
     </div>
@@ -82,7 +82,7 @@ payment of compensation in respect of:</p>
     <div class="step" id="representative">
       <label>Your details (as the representative)</label><br/>
       <h3>Name</h3>
-      <input type="text" id="representativeName"/><br/>
+      <input type="text" name="representativeName"/><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="case"/>
     </div>
@@ -93,7 +93,7 @@ payment of compensation in respect of:</p>
     <div class="step" id="deceased">
       <label>Your Details (as the representative)</label><br/>
       <h3>Name</h3>
-      <input type="text" id="deceasedRepresentative"/><br/>
+      <input type="text" name="deceasedRepresentative"/><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="case"/>
     </div>
@@ -104,7 +104,7 @@ payment of compensation in respect of:</p>
     <div class="step" id="case">
       <label>What we need to know about your case</label><br/>
       <p>What offence(s) were you accused of?</p>
-      <textarea cols="40" rows="5" id="offences"></textarea><br/>
+      <textarea cols="40" rows="5" name="offences"></textarea><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="end"/>
     </div>
