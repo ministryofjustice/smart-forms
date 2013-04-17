@@ -31,6 +31,7 @@ flow.buildHistoryFromData = function() {
           } catch (e) {
             // we've encountered non existing data. Abort
             return;
+          }
         }
       }
       if (nextStepId) {
@@ -41,7 +42,8 @@ flow.buildHistoryFromData = function() {
       }
     }
   }
-}
+};
+
 
 flow.buildViewFromHistory = function() {
   // walk down the history and write the data of each step
