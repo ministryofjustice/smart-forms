@@ -17,3 +17,8 @@ button {
 input[type=text] {
   min-width: 0;
 }
+
+label {
+	font-size: 1.9rem;
+	font-weight: 700;
+}

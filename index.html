@@ -39,69 +39,74 @@ payment of compensation in respect of:</p>
 
     <!-- ================================================== -->
 
-    <div class="step" id="start">
-      <button type="submit" class="medium button" target="'isApplicant'">start</button>
-    </div>
 
     <!-- ================================================== -->
 
-    <div class="step" id="isApplicant">
+    <div class="step" id="start">
       <label>Are you the applicant?</label><br/>
       <input type="radio" name="isApplicant" value="yes"/>Yes<br/>
       <input type="radio" name="isApplicant" value="no"/>No, I am representing the applicant<br/>
 
-      <button type="submit" class="medium button" target="data.isApplicant==='yes' ? 'applicant' : 'isDeceased' ">Continue</button>
+      <button type="submit" class="medium button">Continue</button>
+      <transition target="applicant" if="data.isApplicant.answer.isApplicant==='yes'"/>
+      <transition target="isDeceased" if="data.isApplicant.answer.isApplicant==='no'"/>
     </div>
 
     <!-- ================================================== -->
 
     <!-- 1A -->
     <div class="step" id="applicant">
-      <h2>Your details</h2>
+      <label>Your details</label><br/>
       <div cond="data.isApplicant === 'yes'"><h2>Your Name</h2></div>
       <div cond="data.isApplicant === 'no'"><h2>Name of the person you are representing</h2></div>
       <input type="text" id="applicantName"/><br/>
-      <button type="submit" class="medium button" target="'case'">Continue</button>
+      <button type="submit" class="medium button">Continue</button>
+      <transition target="case"/>
     </div>
 
     <!-- ================================================== -->
 
     <div class="step" id="isDeceased">
-      <h2>Is the applicant deceased?</h2>
+      <label>Is the applicant deceased?</label><br/>
       <input type="radio" name="isDeceased" value="yes"/>&nbsp;Yes<br/>
       <input type="radio" name="isDeceased" value="no"/>&nbsp;No<br/>
 
-      <button type="submit" class="medium button" target="data.isDeceased === 'yes' ? 'deceased' : 'representative'">Continue</button>
+      <button type="submit" class="medium button">Continue</button>
+      <transition target="deceased" if="data.isDeceased.answer.isDeceased === 'yes'"/>
+      <transition target="representative" if="data.isDeceased.answer.isDeceased === 'no'"/>
     </div>
 
     <!-- ================================================== -->
 
     <!-- 1B -->
     <div class="step" id="representative">
-      <h2>Your details (as the representative)</h2>
+      <label>Your details (as the representative)</label><br/>
       <h3>Name</h3>
       <input type="text" id="representativeName"/><br/>
-      <button type="submit" class="medium button" target="'case'">Continue</button>
+      <button type="submit" class="medium button">Continue</button>
+      <transition target="case"/>
     </div>
 
     <!-- ================================================== -->    
 
     <!-- 1C -->
     <div class="step" id="deceased">
-      <h2>Your Details (as the representative)</h2>
+      <label>Your Details (as the representative)</label><br/>
       <h3>Name</h3>
       <input type="text" id="deceasedRepresentative"/><br/>
-      <button type="submit" class="medium button" target="'case'">Continue</button>
+      <button type="submit" class="medium button">Continue</button>
+      <transition target="case"/>
     </div>
 
     <!-- ================================================== -->    
 
     <!-- Part 2 -->
-    <div class="step" is="case">
-      <h3>What we need to know about your case</h3>
+    <div class="step" id="case">
+      <label>What we need to know about your case</label><br/>
       <p>What offence(s) were you accused of?</p>
       <textarea cols="40" rows="5" id="offences"></textarea><br/>
-      <button type="submit" class="medium button" target="'end'">Continue</button>
+      <button type="submit" class="medium button">Continue</button>
+      <transition target="end"/>
     </div>
 
 
@@ -109,6 +114,7 @@ payment of compensation in respect of:</p>
 
 
     <div class="step final" id="end">
+      <label>Thank you</label><br/>
       <p>please send this form at the following address:</p>
 <address>Better Trials Unit
 Miscarriage of Justice Team
