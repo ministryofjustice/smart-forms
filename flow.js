@@ -10,7 +10,7 @@ flow.furthestStepId = null;
 
 flow.buildHistoryFromData = function() {
   // from the existing state of the data, recalculate the history
-  var currentStepId = "start", atTheEnd = false;
+  var currentStepId = "start", atTheEnd = false, i;
   flow.history = [];
   while (true) {
     flow.history.push(currentStepId);
@@ -19,7 +19,7 @@ flow.buildHistoryFromData = function() {
       transitions = $("#"+currentStepId+" transition");
       for (i in transitions) {
         t = transitions[i];
-        if ($(t).attr('if')==undefined) {
+        if ($(t).attr('if')===undefined) {
           nextStepId = $(t).attr("target");
           break;
         } else {
@@ -31,12 +31,9 @@ flow.buildHistoryFromData = function() {
           } catch (e) {
             // we've encountered non existing data. Abort
             return;
-            break;
-          }
         }
       }
-        
-      if (nextStepId) { 
+      if (nextStepId) {
         currentStepId = nextStepId;
       } else {
         console.log("error. No transition found");
@@ -44,7 +41,7 @@ flow.buildHistoryFromData = function() {
       }
     }
   }
-};
+}
 
 flow.buildViewFromHistory = function() {
   // walk down the history and write the data of each step
@@ -55,7 +52,7 @@ flow.buildViewFromHistory = function() {
     items.push("<li class='done'><h3 class='question'>"+data[stepId].question+"</h3><div class='answer'>"+JSON.stringify(data[stepId]['answer'])+"</div><p class='undo' onclick='flow.rewindTo(\""+stepId+"\")' href='#'>Change this answer</p></li>");
   }
   $("#summary").html(items.join(''));
-  $(".done-questions").css("display","block")
+  $(".done-questions").css("display","block");
 
   // then, show the current state
   $("div.state").css("display","none");
@@ -66,7 +63,7 @@ flow.buildViewFromHistory = function() {
 
 flow.hideStep = function(stepId) {
   $("#"+stepId).css("display", "none");
-}
+};
 
 flow.showStep = function(stepId) {
   var thisStep = $("#"+stepId);
@@ -107,13 +104,14 @@ flow.enterStep = function(stepId, comebackTo) {
   if (!$("#"+stepId).hasClass("final")) {
     // if this isn't a final step, put an event handler on each button
     $("#"+stepId+" button[type=submit]").on("click", function() {
+      var i;
       // update data model
       data[stepId] = {"question":$("#"+stepId+" label").text(), "answer":{}};
       $("#"+stepId+" textarea").each(function(index, textarea) { data[stepId]['answer'][textarea.id] = textarea.value; });
       $("#"+stepId+" input:text").each(function(index, text) { data[stepId]['answer'][text.id] = text.value; });
-      $("#"+stepId+" input:radio:checked").each(function(index, radioButton) { 
+      $("#"+stepId+" input:radio:checked").each(function(index, radioButton) {
         data[stepId]['answer'][radioButton.name] = radioButton.value;
-      }); 
+      });
 
       if (comebackTo) {
         // we've come back to this state from a rewind, so go back to where we were before
@@ -125,7 +123,7 @@ flow.enterStep = function(stepId, comebackTo) {
         transitions = $("#"+stepId+" transition");
         for (i in transitions) {
           t = transitions[i];
-          if ($(t).attr('if')==undefined) {
+          if ($(t).attr('if')===undefined) {
             nextStepId = $(t).attr("target");
             break;
           } else {
@@ -135,8 +133,8 @@ flow.enterStep = function(stepId, comebackTo) {
             }
           }
         }
-        
-        if (nextStepId) { 
+
+        if (nextStepId) {
           flow.hideStep(stepId);
           flow.history.push(stepId);
           flow.enterStep(nextStepId);
@@ -146,4 +144,4 @@ flow.enterStep = function(stepId, comebackTo) {
       }
     });
   }
-}
+};
