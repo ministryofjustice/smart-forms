@@ -39,26 +39,23 @@ payment of compensation in respect of:</p>
 
     <!-- ================================================== -->
 
-
-    <!-- ================================================== -->
-
     <div class="step" id="start">
       <label>Are you the applicant?</label><br/>
       <input type="radio" name="isApplicant" value="yes"/>Yes<br/>
       <input type="radio" name="isApplicant" value="no"/>No, I am representing the applicant<br/>
 
       <button type="submit" class="medium button">Continue</button>
-      <transition target="applicant" if="data.start.answer.isApplicant==='yes'"/>
-      <transition target="isDeceased" if="data.start.answer.isApplicant==='no'"/>
+      <transition target="applicant" if="flow.data.start.answer.isApplicant==='yes'"/>
+      <transition target="isDeceased" if="flow.data.start.answer.isApplicant==='no'"/>
     </div>
 
     <!-- ================================================== -->
 
     <!-- 1A -->
     <div class="step" id="applicant">
-      <label>Your details</label><br/>
-      <div cond="data.isApplicant === 'yes'"><h2>Your Name</h2></div>
-      <div cond="data.isApplicant === 'no'"><h2>Name of the person you are representing</h2></div>
+      <label cond="flow.data.start.answer.isApplicant === 'yes'">Your details</label><br/>
+      <label cond="flow.data.start.answer.isApplicant === 'no'">The person you are representing</label><br/>
+      <h2>Name</h2>
       <input type="text" name="applicantName"/><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="case"/>
@@ -72,8 +69,8 @@ payment of compensation in respect of:</p>
       <input type="radio" name="isDeceased" value="no"/>&nbsp;No<br/>
 
       <button type="submit" class="medium button">Continue</button>
-      <transition target="deceased" if="data.isDeceased.answer.isDeceased === 'yes'"/>
-      <transition target="representative" if="data.isDeceased.answer.isDeceased === 'no'"/>
+      <transition target="deceased" if="flow.data.isDeceased.answer.isDeceased === 'yes'"/>
+      <transition target="representative" if="flow.data.isDeceased.answer.isDeceased === 'no'"/>
     </div>
 
     <!-- ================================================== -->
@@ -84,7 +81,7 @@ payment of compensation in respect of:</p>
       <h3>Name</h3>
       <input type="text" name="representativeName"/><br/>
       <button type="submit" class="medium button">Continue</button>
-      <transition target="case"/>
+      <transition target="applicant"/>
     </div>
 
     <!-- ================================================== -->    
@@ -95,7 +92,7 @@ payment of compensation in respect of:</p>
       <h3>Name</h3>
       <input type="text" name="deceasedRepresentative"/><br/>
       <button type="submit" class="medium button">Continue</button>
-      <transition target="case"/>
+      <transition target="applicant"/>
     </div>
 
     <!-- ================================================== -->    

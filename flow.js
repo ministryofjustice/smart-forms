@@ -1,10 +1,9 @@
 var $;
 var flow = {};
-var data = {};
 var i;
 
 flow.history = [];
-flow.data = null;
+flow.data = {};
 flow.furthestStepId = null;
 
 
@@ -20,7 +19,7 @@ flow.buildHistoryFromData = function() {
 
     state = $("#"+currentStepId);
 
-    if (data[currentStepId]) {
+    if (flow.data[currentStepId]) {
 
       // this step has data, move to next step
       transitions = $("#"+currentStepId+" transition");
@@ -49,29 +48,31 @@ flow.buildHistoryFromData = function() {
   }
 };
 
-
 flow.buildViewFromHistory = function() {
   // walk down the history and write the data of each step
   var items = [], i;
   $("#summary").html();
+
+  // Summary of previous answers
   for (i=0; i<flow.history.length - 1; i++) { // history includes the current step. Don't include it.
     stepId = flow.history[i];
-    items.push("<li class='done'><h3 class='question'>"+data[stepId].question+"</h3><div class='answer'>"+JSON.stringify(data[stepId]['answer'])+"</div><p class='undo' onclick='flow.deleteData(\""+stepId+"\")' href='#'>Change this answer</p></li>");
+    items.push("<li class='done'><h3 class='question'>"+flow.data[stepId].question+"</h3><div class='answer'>"+JSON.stringify(flow.data[stepId]['answer'])+"</div><p class='undo' onclick='flow.deleteData(\""+stepId+"\")' href='#'>Change this answer</p></li>");
   }
   $("#summary").html(items.join(''));
   $(".done-questions").css("display","block");
 
+  // current state
   stepId = flow.history[flow.history.length-1];
   $("div.step > button:submit").off("click");
   $("#"+stepId+" > button:submit").on("click", function() {
     var i;
     // update data model
     console.log("creating data["+stepId+"]");
-    data[stepId] = {"question":$("#"+stepId+" label").text(), "answer":{}};
-    $("#"+stepId+" textarea").each(function(index, textarea) { data[stepId]['answer'][textarea.name] = textarea.value; });
-    $("#"+stepId+" input:text").each(function(index, text) { data[stepId]['answer'][text.name] = text.value; });
+    flow.data[stepId] = {"question":$("#"+stepId+" label").text(), "answer":{}};
+    $("#"+stepId+" textarea").each(function(index, textarea) { flow.data[stepId]['answer'][textarea.name] = textarea.value; });
+    $("#"+stepId+" input:text").each(function(index, text) { flow.data[stepId]['answer'][text.name] = text.value; });
     $("#"+stepId+" input:radio:checked").each(function(index, radioButton) {
-      data[stepId]['answer'][radioButton.name] = radioButton.value;
+      flow.data[stepId]['answer'][radioButton.name] = radioButton.value;
     });
     flow.buildHistoryFromData();
     flow.buildViewFromHistory();
@@ -82,13 +83,13 @@ flow.buildViewFromHistory = function() {
 
 
 flow.deleteData = function(stepId) {
-  delete data[stepId];
+  delete flow.data[stepId];
   flow.start();
 };
 
 flow.showStep = function(stepId) {
   var thisStep = $("#"+stepId);
-  var conditionalText = $("#"+stepId+" div[cond]");
+  var conditionalText = $("#"+stepId+" div[cond], #"+stepId+" label[cond]");
 
   for (i=0; i<conditionalText.length;i++) {
     item = conditionalText[i];
