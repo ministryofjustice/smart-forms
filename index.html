@@ -40,23 +40,27 @@ payment of compensation in respect of:</p>
     <!-- ================================================== -->
 
     <div class="step" id="start">
-      <label>Are you the applicant?</label><br/>
-      <input type="radio" name="isApplicant" value="yes"/>Yes<br/>
-      <input type="radio" name="isApplicant" value="no"/>No, I am representing the applicant<br/>
+      <h2>Are you the applicant?</h2>
+      <input type="radio" name="Applicant" value="yes"/>&nbsp;Yes<br/>
+      <input type="radio" name="Applicant" value="no"/>&nbsp;No, I am representing the applicant<br/>
 
       <button type="submit" class="medium button">Continue</button>
-      <transition target="applicant" if="flow.data.start.answer.isApplicant==='yes'"/>
-      <transition target="isDeceased" if="flow.data.start.answer.isApplicant==='no'"/>
+      <transition target="applicant" if="flow.data.start.answer['Applicant']==='yes'"/>
+      <transition target="isDeceased" if="flow.data.start.answer['Applicant']==='no'"/>
     </div>
 
     <!-- ================================================== -->
 
     <!-- 1A -->
     <div class="step" id="applicant">
-      <label cond="flow.data.start.answer.isApplicant === 'yes'">Your details</label><br/>
-      <label cond="flow.data.start.answer.isApplicant === 'no'">The person you are representing</label><br/>
-      <h2>Name</h2>
-      <input type="text" name="applicantName"/><br/>
+      <h2>Applicant Details</h2>
+      <p cond="flow.data.start.answer['Applicant'] === 'yes'">Enter your details</p>
+      <p cond="flow.data.start.answer['Applicant'] === 'no'">Enter de details of the person you are representing</p>
+      <label>Name</label>
+      <input type="text" name="Name"/><br/>
+      <label>Address and postcode</label>
+      <input type="text" name="Address and postcode"/><br/>
+
       <button type="submit" class="medium button">Continue</button>
       <transition target="case"/>
     </div>
@@ -64,22 +68,25 @@ payment of compensation in respect of:</p>
     <!-- ================================================== -->
 
     <div class="step" id="isDeceased">
-      <label>Is the applicant deceased?</label><br/>
-      <input type="radio" name="isDeceased" value="yes"/>&nbsp;Yes<br/>
-      <input type="radio" name="isDeceased" value="no"/>&nbsp;No<br/>
+      <h2>Is the applicant deceased?</h2>
+      <input type="radio" name="Deceased" value="yes"/>&nbsp;Yes<br/>
+      <input type="radio" name="Deceased" value="no"/>&nbsp;No<br/>
 
       <button type="submit" class="medium button">Continue</button>
-      <transition target="deceased" if="flow.data.isDeceased.answer.isDeceased === 'yes'"/>
-      <transition target="representative" if="flow.data.isDeceased.answer.isDeceased === 'no'"/>
+      <transition target="deceased" if="flow.data.isDeceased.answer['Deceased'] === 'yes'"/>
+      <transition target="representative" if="flow.data.isDeceased.answer['Deceased'] === 'no'"/>
     </div>
 
     <!-- ================================================== -->
 
     <!-- 1B -->
     <div class="step" id="representative">
-      <label>Your details (as the representative)</label><br/>
-      <h3>Name</h3>
-      <input type="text" name="representativeName"/><br/>
+      <h2>Representative</h2>
+      <p>Your details (as the representative)</p>
+      <label>Name</label>
+      <input type="text" name="Name"/><br/>
+      <label>Address and postcode</label><br/>
+      <textarea cols="40" rows="5" name="Address"></textarea><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="applicant"/>
     </div>
@@ -88,9 +95,12 @@ payment of compensation in respect of:</p>
 
     <!-- 1C -->
     <div class="step" id="deceased">
-      <label>Your Details (as the representative)</label><br/>
-      <h3>Name</h3>
-      <input type="text" name="deceasedRepresentative"/><br/>
+      <h2>Representative of an applicant who is deceased</h2>
+      <p>Please enter your Details</p>
+      <label>Name</label>
+      <input type="text" name="Name"/><br/>
+      <label>Address and postcode</label><br/>
+      <textarea cols="40" rows="5" name="Address"></textarea><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="applicant"/>
     </div>
@@ -99,9 +109,11 @@ payment of compensation in respect of:</p>
 
     <!-- Part 2 -->
     <div class="step" id="case">
-      <label>What we need to know about your case</label><br/>
-      <p>What offence(s) were you accused of?</p>
-      <textarea cols="40" rows="5" name="offences"></textarea><br/>
+      <h2>The case</h2>
+      <p>What we need to know about the case</p>
+      <p cond="flow.data.start.answer['Applicant'] === 'yes'">What offence(s) were you accused of?</p>
+      <p cond="flow.data.start.answer['Applicant'] === 'no'">What offence(s) was the applicant accused of?</p>
+      <textarea cols="40" rows="5" name="Offence(s)"></textarea><br/>
       <button type="submit" class="medium button">Continue</button>
       <transition target="end"/>
     </div>

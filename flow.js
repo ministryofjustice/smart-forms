@@ -4,8 +4,6 @@ var i;
 
 flow.history = [];
 flow.data = {};
-flow.furthestStepId = null;
-
 
 flow.buildHistoryFromData = function() {
   console.log("buildHistoryFromData");
@@ -48,6 +46,14 @@ flow.buildHistoryFromData = function() {
   }
 };
 
+flow.formatAnswer = function(answer) {
+  var key, result=[];
+  for (key in answer) {
+    result.push(key+": "+answer[key]);
+  }
+  return result.join('<br/>');
+};
+
 flow.buildViewFromHistory = function() {
   // walk down the history and write the data of each step
   var items = [], i;
@@ -56,7 +62,7 @@ flow.buildViewFromHistory = function() {
   // Summary of previous answers
   for (i=0; i<flow.history.length - 1; i++) { // history includes the current step. Don't include it.
     stepId = flow.history[i];
-    items.push("<li class='done'><h3 class='question'>"+flow.data[stepId].question+"</h3><div class='answer'>"+JSON.stringify(flow.data[stepId]['answer'])+"</div><p class='undo' onclick='flow.deleteData(\""+stepId+"\")' href='#'>Change this answer</p></li>");
+    items.push("<li class='done'><h3 class='question'>"+flow.data[stepId].question+"</h3><div class='answer'>"+flow.formatAnswer(flow.data[stepId]['answer'])+"</div><p class='undo' onclick='flow.deleteData(\""+stepId+"\")' href='#'>Change this answer</p></li>");
   }
   $("#summary").html(items.join(''));
   $(".done-questions").css("display","block");
@@ -68,7 +74,7 @@ flow.buildViewFromHistory = function() {
     var i;
     // update data model
     console.log("creating data["+stepId+"]");
-    flow.data[stepId] = {"question":$("#"+stepId+" label").text(), "answer":{}};
+    flow.data[stepId] = {"question":$("#"+stepId+" h2").text(), "answer":{}};
     $("#"+stepId+" textarea").each(function(index, textarea) { flow.data[stepId]['answer'][textarea.name] = textarea.value; });
     $("#"+stepId+" input:text").each(function(index, text) { flow.data[stepId]['answer'][text.name] = text.value; });
     $("#"+stepId+" input:radio:checked").each(function(index, radioButton) {
@@ -89,7 +95,7 @@ flow.deleteData = function(stepId) {
 
 flow.showStep = function(stepId) {
   var thisStep = $("#"+stepId);
-  var conditionalText = $("#"+stepId+" div[cond], #"+stepId+" label[cond]");
+  var conditionalText = $("#"+stepId+" p[cond], #"+stepId+" label[cond]");
 
   for (i=0; i<conditionalText.length;i++) {
     item = conditionalText[i];
