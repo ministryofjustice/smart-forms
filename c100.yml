@@ -1,0 +1,91 @@
+block:
+  id: start
+  heading: "Are you the applicant?"
+  subtext: "something"
+  # ref: 1a # external reference
+  input:
+    name: applicant
+    type: radio
+      option:
+        label: Yes
+        value: yes
+        next: applicant
+      option:
+        label: No
+        value: no
+        next: isDeceased
+  # next: Applicant
+block:
+  id: isDeceased
+  heading: "Is the applicant deceased?"
+  subtext: "something"
+  input:
+    name: deceased
+    type: radio
+      option:
+        label: Yes
+        value: yes
+        next: deceased
+      option:
+        label: No
+        value: no
+        next: representative
+block:
+  id: applicant
+  heading: "Applicant details"
+    condition:
+      if: "start.applicant == Yes"
+      text: "What offences were you accused off?"
+    condition:
+      if: "start.applicant == No"
+      text: "What offences were you accused off?"
+  ref: 1a
+  input:
+    name: name
+    type: text
+  input:
+    name: address
+    type: textarea
+  next: case
+block:
+  id: representative
+  heading: "Your details (as the representative)"
+  subtext: "something"
+  ref: 1b
+  input:
+    name: name
+    type: text
+  input:
+    name: address
+    type: textarea
+  next: applicant
+block:
+  id: deceased
+  heading: "Your details (as the representative of the deceased)"
+  subtext: "something"
+  ref: 1c
+  input:
+    name: name
+    type: text
+  input:
+    name: address
+    type: textarea
+  next: case
+block:
+  id: case
+  heading: "The case"
+  subtext: 
+    condition:
+      if: "start.applicant == Yes"
+      text: "What offences were you accused off?"
+    condition:
+      if: "start.applicant == No"
+      text: "What offences were you accused off?"
+  input:
+    name: offences
+    type: textarea
+  next: end
+block:
+  id: end
+  heading: "Thank you"
+  subtext: "Your details have been saved."
