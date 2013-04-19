@@ -1,0 +1,24 @@
+.block {
+  display: none;
+  background-color: #FFFFFF;
+  margin-right: 15em;
+  padding: 0 10em 1em 2em;
+  position: relative;
+}
+
+button {
+  margin-top: 1em;
+}
+
+.done-questions {
+  display: none;
+}
+
+input[type=text] {
+  min-width: 0;
+}
+
+label {
+	font-size: 1.9rem;
+	font-weight: 700;
+}
