@@ -41,8 +41,8 @@ payment of compensation in respect of:</p>
 
     <div class="step" id="start">
       <h2>Are you the applicant?</h2>
-      <input type="radio" name="Applicant" value="yes"/>&nbsp;Yes<br/>
-      <input type="radio" name="Applicant" value="no"/>&nbsp;No, I am representing the applicant<br/>
+      <input type="radio" name="Applicant" value="Yes"/>&nbsp;Yes<br/>
+      <input type="radio" name="Applicant" value="No"/>&nbsp;No, I am representing the applicant<br/>
 
       <button type="submit" class="medium button">Continue</button>
       <transition target="applicant" if="flow.data.start.answer['Applicant']==='yes'"/>
@@ -69,8 +69,8 @@ payment of compensation in respect of:</p>
 
     <div class="step" id="isDeceased">
       <h2>Is the applicant deceased?</h2>
-      <input type="radio" name="Deceased" value="yes"/>&nbsp;Yes<br/>
-      <input type="radio" name="Deceased" value="no"/>&nbsp;No<br/>
+      <input type="radio" name="Deceased" value="Yes"/>&nbsp;Yes<br/>
+      <input type="radio" name="Deceased" value="No"/>&nbsp;No<br/>
 
       <button type="submit" class="medium button">Continue</button>
       <transition target="deceased" if="flow.data.isDeceased.answer['Deceased'] === 'yes'"/>
