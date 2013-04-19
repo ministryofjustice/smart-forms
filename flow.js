@@ -47,9 +47,19 @@ flow.buildHistoryFromData = function() {
 };
 
 flow.formatAnswer = function(answer) {
-  var key, result=[];
-  for (key in answer) {
-    result.push(key+": "+answer[key]);
+  var key, keys=[], result=[];
+  if (Object.keys) {
+    keys = Object.keys(answer);
+  } else {
+      alert("Object.keys not available. You're probably using an old browser.");
+  }
+  if (keys.length === 1) {
+    // if there's only one form item in the step, don't show the answer's key, as the step's title (h2) suffices
+    result.push(answer[keys[0]]);
+  } else {
+    for (key in answer) {
+      result.push(key+": "+answer[key]);
+    }
   }
   return result.join('<br/>');
 };
