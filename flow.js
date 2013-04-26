@@ -6,14 +6,11 @@ flow.history = [];
 flow.data = {};
 
 flow.buildHistoryFromData = function() {
-  console.log("buildHistoryFromData");
   // from the existing state of the data, recalculate the history
   var currentBlockId = "start", i;
   flow.history = [];
-  console.log("history");
   while (true) {
     flow.history.push(currentBlockId);
-    console.log("adding to history: "+currentBlockId);
 
     state = $("#"+currentBlockId);
 
@@ -79,21 +76,22 @@ flow.buildViewFromHistory = function() {
 
   // current state
   blockId = flow.history[flow.history.length-1];
-  $("div.block > button:submit").off("click");
-  $("#"+blockId+" > button:submit").on("click", function() {
-    var i;
-    // update data model
-    console.log("creating data["+blockId+"]");
-    flow.data[blockId] = {"question":$("#"+blockId+" h2").text(), "answer":{}};
-    $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId]['answer'][textarea.name] = textarea.value; });
-    $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId]['answer'][text.name] = text.value; });
-    $("#"+blockId+" input:radio:checked").each(function(index, radioButton) {
-      flow.data[blockId]['answer'][radioButton.name] = radioButton.value;
-    });
-    flow.buildHistoryFromData();
-    flow.buildViewFromHistory();
+  $(".block input[type='button']").off("click");
+  $("#"+blockId+" input[type='button']").on("click", function() {
+    if (validate.validateForm(blockId)) {
+      var i;
+      // update data model
+      flow.data[blockId] = {"question":$("#"+blockId+" h2").text(), "answer":{}};
+      $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId]['answer'][textarea.name] = textarea.value; });
+      $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId]['answer'][text.name] = text.value; });
+      $("#"+blockId+" input:radio:checked").each(function(index, radioButton) {
+        flow.data[blockId]['answer'][radioButton.name] = radioButton.value;
+      });
+      flow.buildHistoryFromData();
+      flow.buildViewFromHistory();
+    }
   });
-  $("div.block").css("display","none");
+  $(".block").css("display","none");
   flow.showBlock(blockId);
 };
 

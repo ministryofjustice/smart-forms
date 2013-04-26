@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+<link type="text/css" rel="stylesheet" media="screen" href="https://assets.digital.cabinet-office.gov.uk/static/application-933c57f666fda045b7b793af9ac0f457.css"/>
+<link type="text/css" rel="stylesheet" media="print" href="https://assets.digital.cabinet-office.gov.uk/static/print-a250641f33ac06dba78975b0c65f8ac9.css"/>
+<link type="text/css" rel="stylesheet" media="all" href="https://assets.digital.cabinet-office.gov.uk/static/fonts-0fb6b917e34e45c93a44eec72dcc21de.css"/>
+<link type="image/x-icon" href="https://assets.digital.cabinet-office.gov.uk/static/favicon-447e4ac1ab790342660eacfe3dcce264.ico" rel="shortcut icon"/>
+<link type="text/css" href="jquery-ui/themes/base/jquery-ui.css" rel="stylesheet"/>
+    <title>Lasting power of attorney for health and welfare</title>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+  </head>
+  <body>
+
+<header id="global-header" class="group" role="banner"><div class="header-wrapper group"><a id="logo" title="Go to the gov.uk homepage" href="/"><img alt="GOV.UK" src="https://assets.digital.cabinet-office.gov.uk/static/gov.uk_logotype-2x-24145374d271079f08d96c618cc8d4a5.png"></a><a class="button search-toggle" href="#search">Search</a><form id="search" class="site-search" role="search" method="get" action="/search"><label class="visuallyhidden" for="site-search-text">Search</label><input id="site-search-text" type="search" title="Search" name="q"><input class="button" type="submit" value="Search"></form></div></header>
+
+
+  <header class="page-header group">
+    <hgroup>
+      <h1>Lasting power of attorney for health and welfare</h1>
+      <p>About this lasting power of attorney
+This lasting power of attorney allows you to choose people to act on your 
+behalf (as an attorney) and make decisions about your health and personal 
+welfare, when you are unable to make decisions for yourself. This can 
+include decisions about your healthcare and medical treatment, decisions 
+about where you live and day-to-day decisions about your personal welfare, 
+such as your diet, dress or daily routine.</p>
+
+    </hgroup>
+  </header>
+
+<div class="done-questions">
+<div class="start-again">
+<a href="#" onclick="javascript:location.reload()">Start again</a>
+</div>
+<ol id="summary">
+</ol>
+</div>
+
+    <!-- ================================================== -->
+
+    <form class="block" id="start">
+      <h2>About the person who is giving this lasting power of attorney</h2>
+      
+      <label>Title</label>
+      <input type="text" name="Title"/><br/>
+      <label>First names</label>
+      <input type="text" name="First names"/><br/>
+      <label>Last name</label>
+      <input type="text" name="Last name"/><br/>
+      <label>Date of birth</label>
+      <input type="text" name="Date of birth" id="start-dob"/><br/>
+      <label>Address</label>
+      <textarea cols="40" rows="5" name="Address"></textarea><br/>
+      <label>Postcode</label>
+      <input type="text" class="valid-postcode" name="Postcode"/>
+      <div>
+        <input type="button" class="medium button" value="Continue"/>
+      </div>
+      <transition target="end"></transition>
+    </form>
+
+    <!-- ================================================== -->
+
+
+
+    <!-- ================================================== -->    
+
+
+    <div class="block" id="end">
+      <label>Thank you</label><br/>
+      <p>please send this form at the following address:</p>
+<address>Better Trials Unit
+Miscarriage of Justice Team
+Post point 7.37
+102 Petty France
+London
+SW1H 9AJ.</address>
+    </div>
+
+    <script src="jquery.js" type="application/javascript"></script>
+    <script src="jquery-ui/ui/minified/jquery-ui.min.js" type="application/javascript"></script>
+    <script src="flow.js" type="application/javascript"></script>
+    <script src="validate.js" type="application/javascript"></script>
+    <script type="application/javascript">
+      $(function(){ 
+        $("#start-dob").datepicker();
+        flow.start();
+      });
+    </script>
+  </body>
+</html>
