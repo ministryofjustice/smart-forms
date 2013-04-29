@@ -1,5 +1,5 @@
 /* exported flow */
-/* jshint evil: true */
+/* jshint evil: true, unused: false */
 
 var $, validate;
 
