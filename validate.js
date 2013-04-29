@@ -6,19 +6,25 @@ validate.dateRe = /^\d{2}\/\d{2}\/\d{4}/;
 validate.validateForm = function(formId) {
   var isValid = true, inputs = $("#"+formId+" input"), i, regexp;
   for (i=0; i<inputs.length; i++) {
-    inputElement = inputs[i];
+    inputElement = $(inputs[i]);
     console.log(inputElement);
 
+    if (!inputElement.hasClass("valid-optional") && inputElement.val() === "") {
+      alert("You have not filled out: " + inputElement.attr("Name"));
+      isValid = false;
+      break;
+    }
+
     // Validate postcode
-    if ($(inputElement).hasClass("valid-postcode") && !validate.postcodeRe.test($(inputElement).val())) {
-      alert("invalid postcode");
+    if (inputElement.hasClass("valid-postcode") && !validate.postcodeRe.test(inputElement.val())) {
+      alert("Invalid value for: " + inputElement.attr("Name"));
       isValid = false;
       break;
     }
 
     // validate date
-    if ($(inputElement).hasClass("valid-date") && !validate.dateRe.test($(inputElement).val())) {
-      alert("invalid date");
+    if (inputElement.hasClass("valid-date") && !validate.dateRe.test(inputElement.val())) {
+      alert("Invalid value for: "+inputElement.attr("Name"));
       isValid = false;
       break;
     }
