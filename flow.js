@@ -1,3 +1,5 @@
+/* jshint evil: true */
+
 var $, validate;
 var flow = {};
 var i;
@@ -6,6 +8,7 @@ flow.history = [];
 flow.data = {};
 
 flow.buildHistoryFromData = function() {
+  "use strict";
   // from the existing state of the data, recalculate the history
   var currentBlockId = "start", i, state, transitions, t, nextBlockId;
   flow.history = [];
@@ -19,14 +22,16 @@ flow.buildHistoryFromData = function() {
       // this block has data, move to next block
       transitions = $("#"+currentBlockId+" transition");
       for (i in transitions) {
-        t = transitions[i];
-        if ($(t).attr('if')===undefined) {
-          nextBlockId = $(t).attr("target");
-          break;
-        } else {
-          if (eval($(t).attr("if"))) {
+        if (transitions.hasOwnProperty(i)) {
+          t = transitions[i];
+          if ($(t).attr("if")===undefined) {
             nextBlockId = $(t).attr("target");
             break;
+          } else {
+            if (eval($(t).attr("if"))) {
+              nextBlockId = $(t).attr("target");
+              break;
+            }
           }
         }
       }
@@ -47,11 +52,12 @@ flow.buildHistoryFromData = function() {
 };
 
 flow.formatAnswer = function(answer) {
+  "use strict";
   var key, keys=[], result=[];
   if (Object.keys) {
     keys = Object.keys(answer);
   } else {
-      alert("Object.keys not available. You're probably using an old browser.");
+    alert("Object.keys not available. You're probably using an old browser.");
   }
   if (keys.length === 1) {
     // if there's only one form item in the block, don't show the answer's key, as the block's title (h2) suffices
@@ -61,10 +67,11 @@ flow.formatAnswer = function(answer) {
       result.push(key+": "+answer[key]);
     }
   }
-  return result.join('<br/>');
+  return result.join("<br/>");
 };
 
 flow.buildViewFromHistory = function() {
+  "use strict";
   // walk down the history and write the data of each block
   var items = [], i, blockId;
   $("#summary").html();
@@ -72,7 +79,7 @@ flow.buildViewFromHistory = function() {
   // Summary of previous answers
   for (i=0; i<flow.history.length - 1; i++) { // history includes the current block. Don't include it.
     blockId = flow.history[i];
-    items.push("<li class='done'><h3 class='question'>"+flow.data[blockId].question+"</h3><div class='answer'>"+flow.formatAnswer(flow.data[blockId]['answer'])+"</div><p class='undo' onclick='flow.deleteData(\""+blockId+"\")' href='#'>Change this answer</p></li>");
+    items.push("<li class='done'><h3 class='question'>"+flow.data[blockId].question+"</h3><div class='answer'>"+flow.formatAnswer(flow.data[blockId].answer)+"</div><p class='undo' onclick='flow.deleteData(\""+blockId+"\")' href='#'>Change this answer</p></li>");
   }
   $("#summary").html(items.join(''));
   $(".done-questions").css("display","block");
@@ -82,13 +89,12 @@ flow.buildViewFromHistory = function() {
   $(".block input[type='button']").off("click");
   $("#"+blockId+" input[type='button']").on("click", function() {
     if (validate.validateForm(blockId)) {
-      var i;
       // update data model
       flow.data[blockId] = {"question":$("#"+blockId+" h2").text(), "answer":{}};
-      $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId]['answer'][textarea.name] = textarea.value; });
-      $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId]['answer'][text.name] = text.value; });
+      $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId].answer[textarea.name] = textarea.value; });
+      $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId].answer[text.name] = text.value; });
       $("#"+blockId+" input:radio:checked").each(function(index, radioButton) {
-        flow.data[blockId]['answer'][radioButton.name] = radioButton.value;
+        flow.data[blockId].answer[radioButton.name] = radioButton.value;
       });
       flow.buildHistoryFromData();
       flow.buildViewFromHistory();
@@ -100,11 +106,13 @@ flow.buildViewFromHistory = function() {
 
 
 flow.deleteData = function(blockId) {
+  "use strict";
   delete flow.data[blockId];
   flow.start();
 };
 
 flow.showBlock = function(blockId) {
+  "use strict";
   var thisBlock = $("#"+blockId),
       conditionalText = $("#"+blockId+" p[cond], #"+blockId+" label[cond]"),
       item;
@@ -118,6 +126,7 @@ flow.showBlock = function(blockId) {
 
 
 flow.start = function() {
+  "use strict";
   flow.buildHistoryFromData();
   flow.buildViewFromHistory();
 };
