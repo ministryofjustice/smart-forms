@@ -1,4 +1,4 @@
-var $;
+var $, validate;
 var flow = {};
 var i;
 
@@ -7,7 +7,7 @@ flow.data = {};
 
 flow.buildHistoryFromData = function() {
   // from the existing state of the data, recalculate the history
-  var currentBlockId = "start", i;
+  var currentBlockId = "start", i, state, transitions, t, nextBlockId;
   flow.history = [];
   while (true) {
     flow.history.push(currentBlockId);
@@ -37,7 +37,10 @@ flow.buildHistoryFromData = function() {
         return;
       }
     } else {
-      // no data for this state
+      // no data for this state. Move to transition
+      transitions = $("#"+currentBlockId+" transition");
+      t = transitions[0];
+      nextBlockId = $(t).attr("target");
       return;
     }
   }
@@ -63,7 +66,7 @@ flow.formatAnswer = function(answer) {
 
 flow.buildViewFromHistory = function() {
   // walk down the history and write the data of each block
-  var items = [], i;
+  var items = [], i, blockId;
   $("#summary").html();
 
   // Summary of previous answers
@@ -102,8 +105,9 @@ flow.deleteData = function(blockId) {
 };
 
 flow.showBlock = function(blockId) {
-  var thisBlock = $("#"+blockId);
-  var conditionalText = $("#"+blockId+" p[cond], #"+blockId+" label[cond]");
+  var thisBlock = $("#"+blockId),
+      conditionalText = $("#"+blockId+" p[cond], #"+blockId+" label[cond]"),
+      item;
 
   for (i=0; i<conditionalText.length;i++) {
     item = conditionalText[i];
