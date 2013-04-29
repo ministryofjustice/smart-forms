@@ -61,7 +61,7 @@ var flow = (function () {
       result.push(answer[keys[0]]);
     } else {
       for (key in answer) {
-        if (answer.hasOwnProperty(key)) {
+        if (answer.hasOwnProperty(key) && answer[key] !== "") {
           result.push(key+": "+answer[key]);
         }
       }
