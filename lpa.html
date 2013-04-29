@@ -57,15 +57,72 @@ such as your diet, dress or daily routine.</p>
       <div>
         <input type="button" class="medium button" value="Continue"/>
       </div>
-      <transition target="end"></transition>
+      <transition target="attorneys"></transition>
     </form>
 
     <!-- ================================================== -->
 
+    <form class="block" id="attorneys">
+      <h2>About the attorneys you are appointing</h2>
 
+      <h3>First (or only) attorney</h3>
+
+      <label>Title</label>
+      <input type="text" name="Title"/><br/>
+      <label>First names</label>
+      <input type="text" name="First names"/><br/>
+      <label>Last name</label>
+      <input type="text" name="Last name"/><br/>
+      <label>Date of birth (DD/MM/YYYY)</label>
+      <input type="text" name="Date of birth" class="valid-date"/><br/>
+      <label>Address</label>
+      <textarea cols="40" rows="5" name="Address"></textarea><br/>
+      <label>Postcode</label>
+      <input type="text" class="valid-postcode" name="Postcode"/><br/>
+      <div>
+        <input type="button" class="medium button" value="Continue"/>
+      </div>
+      <transition target="second-attorney"></transition>
+    </form>
 
     <!-- ================================================== -->    
 
+    <form class="block" id="second-attorney">
+      <h2>Do you wish to nominate a second attorney?</h2>
+
+      <input type="radio" name="Second Attorney" value="Yes"/>&nbsp;Yes<br/>
+      <input type="radio" name="Second Attorney" value="No"/>&nbsp;No<br/>
+
+      <input type="button" class="medium button" value="Continue"/>
+      <transition target="second-attorney-details" if="flow.data['second-attorney'].answer['Second Attorney']==='Yes'"></transition>
+      <transition target="end" if="flow.data['second-attorney'].answer['Second Attorney']==='No'"></transition>
+    </form>
+
+    <!-- ================================================== -->    
+
+    <form class="block" id="second-attorney-details">
+
+      <h3>Your second attorney</h3>
+
+      <label>Title</label>
+      <input type="text" name="Title"/><br/>
+      <label>First names</label>
+      <input type="text" name="First names"/><br/>
+      <label>Last name</label>
+      <input type="text" name="Last name"/><br/>
+      <label>Date of birth (DD/MM/YYYY)</label>
+      <input type="text" name="Date of birth" class="valid-date"/><br/>
+      <label>Address</label>
+      <textarea cols="40" rows="5" name="Address"></textarea><br/>
+      <label>Postcode</label>
+      <input type="text" class="valid-postcode" name="Postcode"/><br/>
+      <div>
+        <input type="button" class="medium button" value="Continue"/>
+      </div>
+      <transition target="end"></transition>
+    </form>
+
+    <!-- ================================================== -->    
 
     <div class="block" id="end">
       <label>Thank you</label><br/>
