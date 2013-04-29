@@ -47,8 +47,8 @@ such as your diet, dress or daily routine.</p>
       <input type="text" name="First names"/><br/>
       <label>Last name</label>
       <input type="text" name="Last name"/><br/>
-      <label>Date of birth</label>
-      <input type="text" name="Date of birth" id="start-dob"/><br/>
+      <label>Date of birth (DD/MM/YYYY)</label>
+      <input type="text" name="Date of birth" class="valid-date"/><br/>
       <label>Address</label>
       <textarea cols="40" rows="5" name="Address"></textarea><br/>
       <label>Postcode</label>
@@ -83,7 +83,6 @@ SW1H 9AJ.</address>
     <script src="validate.js" type="application/javascript"></script>
     <script type="application/javascript">
       $(function(){ 
-        $("#start-dob").datepicker();
         flow.start();
       });
     </script>
