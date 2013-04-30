@@ -28,111 +28,63 @@ such as your diet, dress or daily routine.</p>
     </hgroup>
   </header>
 
-<div class="done-questions">
-<div class="start-again">
-<a href="#" onclick="javascript:location.reload()">Start again</a>
-</div>
-<ol id="summary">
-</ol>
-</div>
+    <!-- ================================================== -->
+    <hr/>
+    <div class="block" id="start">
+      <div class="summary">
+        <div>The donor is <span id="start_title"></span> <span id="start_first_names"></span> <span id="start_last_name"></span></div>
+        <div><a onclick="flow.deleteData('start')">View/edit details</a></div>
+      </div>
+      <form>
+        <h2>About the person who is giving this lasting power of attorney</h2>
+        <label>Title</label><br/>
+        <input id="start_title" type="text" name="Title" value="Mr"/><br/>
+        <label>First names</label><br/>
+        <input id="start_first_names" type="text" name="First names" value="Oliver"/><br/>
+        <label>Last name</label><br/>
+        <input id="start_last_name" type="text" name="Last name" value="Twist"/><br/>
+        <label>Date of birth (DD/MM/YYYY)</label><br/>
+        <input id="start_dob" type="text" name="Date of birth" class="valid-date" value="11/11/1111"/><br/>
+        <label>Address</label><br/>
+        <textarea id="start_address" cols="40" rows="5" name="Address">11 Privet Drive</textarea><br/>
+        <label>Postcode</label><br/>
+        <input id="start_postcode" type="text" class="valid-postcode" name="Postcode" value="WE3 3EW"/><br/>
+        <label>Any other names you are known by in medical records or welfare records</label><br/>
+        <input id="start_other_names" type="text" class="valid-optional" name="Other Names"/>
+        <div>
+          <input type="button" class="medium button" value="Continue"/>
+        </div>
+        <transition target="consent"></transition>
+      </form>
+    </div>
 
     <!-- ================================================== -->
-
-    <form class="block" id="start">
-      <h2>About the person who is giving this lasting power of attorney</h2>
-      <label>Title</label><br/>
-      <input type="text" name="Title"/><br/>
-      <label>First names</label><br/>
-      <input type="text" name="First names"/><br/>
-      <label>Last name</label><br/>
-      <input type="text" name="Last name"/><br/>
-      <label>Date of birth (DD/MM/YYYY)</label><br/>
-      <input type="text" name="Date of birth" class="valid-date"/><br/>
-      <label>Address</label><br/>
-      <textarea cols="40" rows="5" name="Address"></textarea><br/>
-      <label>Postcode</label><br/>
-      <input type="text" class="valid-postcode" name="Postcode"/><br/>
-      <label>Any other names you are known by in medical records or welfare records</label><br/>
-      <input type="text" class="valid-optional" name="Other Names"/>
-      <div>
-        <input type="button" class="medium button" value="Continue"/>
+    <hr/>
+    <div class="block" id="consent">
+      <div class="summary">
+        <div if="flow.data.consent.consent_consent === 'A'">The attorneys can make decisions about life-sustaining treatment on behalf of the donor</div>
+        <div if="flow.data.consent.consent_consent === 'B'">The attorneys are not allowed to make decisions about life-sustaining treatment on behalf of the donor</div>
+        <div><a onclick="flow.deleteData('consent')">View/edit details</a></div>
       </div>
-      <transition target="attorneys"></transition>
-    </form>
+
+      <form>
+        <h2>Do you want to give your attorneys the authority to make decisions about life-sustaining treatment on your behalf?</h2>
+        <div id="consent_consent">
+          <input type="radio" name="consent" value="A"/>&nbsp;I want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
+          <input type="radio" name="consent" value="B"/>&nbsp;I do not want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
+        </div>
+        <input type="button" class="medium button" value="Save and continue"/>
+        <transition target="end" if="flow.data.consent.consent_consent === 'A'"/>
+        <transition target="end" if="flow.data.consent.consent_consent === 'B'"/>
+      </form>
+    </div>
 
     <!-- ================================================== -->
-
-    <form class="block" id="attorneys">
-      <h2>About the attorneys you are appointing</h2>
-
-      <h3>First (or only) attorney</h3>
-
-      <label>Title</label><br/>
-      <input type="text" name="Title"/><br/>
-      <label>First names</label><br/>
-      <input type="text" name="First names"/><br/>
-      <label>Last name</label><br/>
-      <input type="text" name="Last name"/><br/>
-      <label>Date of birth (DD/MM/YYYY)</label><br/>
-      <input type="text" name="Date of birth" class="valid-date"/><br/>
-      <label>Address</label><br/>
-      <textarea cols="40" rows="5" name="Address"></textarea><br/>
-      <label>Postcode</label><br/>
-      <input type="text" class="valid-postcode" name="Postcode"/><br/>
-      <div>
-        <input type="button" class="medium button" value="Continue"/>
-      </div>
-      <transition target="second-attorney"></transition>
-    </form>
-
-    <!-- ================================================== -->    
-
-    <form class="block" id="second-attorney">
-      <h2>Do you wish to nominate a second attorney?</h2>
-
-      <input type="radio" name="Second Attorney" value="Yes"/>&nbsp;Yes<br/>
-      <input type="radio" name="Second Attorney" value="No"/>&nbsp;No<br/>
-
-      <input type="button" class="medium button" value="Continue"/>
-      <transition target="second-attorney-details" if="flow.data['second-attorney'].answer['Second Attorney']==='Yes'"></transition>
-      <transition target="end" if="flow.data['second-attorney'].answer['Second Attorney']==='No'"></transition>
-    </form>
-
-    <!-- ================================================== -->    
-
-    <form class="block" id="second-attorney-details">
-
-      <h3>Your second attorney</h3>
-
-      <label>Title</label><br/>
-      <input type="text" name="Title"/><br/>
-      <label>First names</label><br/>
-      <input type="text" name="First names"/><br/>
-      <label>Last name</label><br/>
-      <input type="text" name="Last name"/><br/>
-      <label>Date of birth (DD/MM/YYYY)</label><br/>
-      <input type="text" name="Date of birth" class="valid-date"/><br/>
-      <label>Address</label><br/>
-      <textarea cols="40" rows="5" name="Address"></textarea><br/>
-      <label>Postcode</label><br/>
-      <input type="text" class="valid-postcode" name="Postcode"/><br/>
-      <div>
-        <input type="button" class="medium button" value="Continue"/>
-      </div>
-      <transition target="end"></transition>
-    </form>
-
-    <!-- ================================================== -->    
-
+    <hr/>
     <div class="block" id="end">
-      <label>Thank you</label><br/>
-      <p>please send this form at the following address:</p>
-<address>Better Trials Unit
-Miscarriage of Justice Team
-Post point 7.37
-102 Petty France
-London
-SW1H 9AJ.</address>
+      <form>
+        <h2>Thank you</h2>
+      </form>
     </div>
 
     <script src="jquery.js" type="application/javascript"></script>

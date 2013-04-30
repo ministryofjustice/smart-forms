@@ -70,54 +70,70 @@ var flow = (function () {
   }
 
   function buildViewFromHistory() {
-    // walk down the history and write the data of each block
-    var items = [], i, blockId;
-    $("#summary").html();
+    // walk down the history list
+    // for each history item (except last)
+    // - if there's data, display it in summary form
+    // - if there isn't data display the form and return
+
+    var items = [], item, i, j, blockId, blockData, dataItem, conditionalText, attr, spans, span;
+    $(".block form").css("display","none");
+    $(".summary").css("display","none");
+
 
     // Summary of previous answers
     for (i=0; i<history.length - 1; i++) { // history includes the current block. Don't include it.
       blockId = history[i];
-      items.push("<li class='done'><h3 class='question'>"+flow.data[blockId].question+"</h3><div class='answer'>"+formatAnswer(flow.data[blockId].answer)+"</div><p class='undo' onclick='deleteData(\""+blockId+"\")' href='#'>Change this answer</p></li>");
+      blockData = flow.data[blockId];
+
+      conditionalText = $("#"+blockId+" *[if]");
+      for (j=0; j<conditionalText.length;j++) {
+        item = conditionalText[j];
+        item.style.display = eval(item.getAttribute("if")) ? "block" : "none";
+      }
+
+      spans = $("#"+blockId+" div.summary span");
+      for (j=0; j<spans.length; j++) {
+        span = $(spans[j]);
+        span.html(blockData[span.attr("id")]);
+      }
+      $(".summary").css("display","block");
+
     }
-    $("#summary").html(items.join(''));
-    $(".done-questions").css("display","block");
 
     // current state
-    blockId = history[history.length-1];
     $(".block input[type='button']").off("click");
+
+    blockId = history[history.length-1];
+    $("#"+blockId+" div.summary").css("display", "none");
     $("#"+blockId+" input[type='button']").on("click", function() {
       if (validate.validateForm(blockId)) {
         // update data model
-        flow.data[blockId] = {"question":$("#"+blockId+" h2").text(), "answer":{}};
-        $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId].answer[textarea.name] = textarea.value; });
-        $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId].answer[text.name] = text.value; });
+        flow.data[blockId] = {};
+        $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId][textarea.id] = textarea.value; });
+        $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId][text.id] = text.value; });
         $("#"+blockId+" input:radio:checked").each(function(index, radioButton) {
-          flow.data[blockId].answer[radioButton.name] = radioButton.value;
+          var radioButtonsDivId = $(radioButton).parent().attr("id");
+          flow.data[blockId][radioButtonsDivId] = $(radioButton).val();
         });
         buildHistoryFromData();
         buildViewFromHistory();
       }
     });
-    $(".block").css("display","none");
     showBlock(blockId);
   }
 
 
-  function deleteData(blockId) {
-    delete flow.data[blockId];
-    flow.start();
-  }
 
   function showBlock(blockId) {
     var thisBlock = $("#"+blockId),
-        conditionalText = $("#"+blockId+" p[cond], #"+blockId+" label[cond]"),
+        conditionalText = $("#"+blockId+" form:not(transition)[if]"),
         item;
 
     for (i=0; i<conditionalText.length;i++) {
       item = conditionalText[i];
-      item.style.display = eval(item.getAttribute("cond")) ? "block" : "none";
+      item.style.display = eval(item.getAttribute("if")) ? "block" : "none";
     }
-    thisBlock.css("display", "block");
+    thisBlock.find("form").css("display", "block");
   }
 
 
@@ -127,6 +143,11 @@ var flow = (function () {
     "start": function() {
       buildHistoryFromData();
       buildViewFromHistory();
+    },
+
+    "deleteData": function(blockId) {
+      delete flow.data[blockId];
+      flow.start();
     }
   };
 })();
