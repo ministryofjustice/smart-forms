@@ -32,25 +32,25 @@ such as your diet, dress or daily routine.</p>
     <hr/>
     <div class="block" id="start">
       <div class="summary">
-        <div>The donor is <span id="start_title"></span> <span id="start_first_names"></span> <span id="start_last_name"></span></div>
+        <div>The donor is <span data="title"></span> <span data="first_names"></span> <span data="last_name"></span></div>
         <div><a onclick="flow.deleteData('start')">View/edit details</a></div>
       </div>
       <form>
         <h2>About the person who is giving this lasting power of attorney</h2>
         <label>Title</label><br/>
-        <input id="start_title" type="text" name="Title" value="Mr"/><br/>
+        <input name="title" type="text" value="Mr"/><br/>
         <label>First names</label><br/>
-        <input id="start_first_names" type="text" name="First names" value="Oliver"/><br/>
+        <input name="first_names" type="text" value="Oliver"/><br/>
         <label>Last name</label><br/>
-        <input id="start_last_name" type="text" name="Last name" value="Twist"/><br/>
+        <input name="last_name" type="text" value="Twist"/><br/>
         <label>Date of birth (DD/MM/YYYY)</label><br/>
-        <input id="start_dob" type="text" name="Date of birth" class="valid-date" value="11/11/1111"/><br/>
+        <input name="dob" type="text" class="valid-date" value="11/11/1111"/><br/>
         <label>Address</label><br/>
-        <textarea id="start_address" cols="40" rows="5" name="Address">11 Privet Drive</textarea><br/>
+        <textarea name="address" cols="40" rows="5">11 Privet Drive</textarea><br/>
         <label>Postcode</label><br/>
-        <input id="start_postcode" type="text" class="valid-postcode" name="Postcode" value="WE3 3EW"/><br/>
+        <input name="postcode" type="text" class="valid-postcode" value="WE3 3EW"/><br/>
         <label>Any other names you are known by in medical records or welfare records</label><br/>
-        <input id="start_other_names" type="text" class="valid-optional" name="Other Names"/>
+        <input name="other_names" type="text" class="valid-optional"/>
         <div>
           <input type="button" class="medium button" value="Continue"/>
         </div>
@@ -62,20 +62,17 @@ such as your diet, dress or daily routine.</p>
     <hr/>
     <div class="block" id="consent">
       <div class="summary">
-        <div if="flow.data.consent.consent_consent === 'A'">The attorneys can make decisions about life-sustaining treatment on behalf of the donor</div>
-        <div if="flow.data.consent.consent_consent === 'B'">The attorneys are not allowed to make decisions about life-sustaining treatment on behalf of the donor</div>
+        <div if="flow.data.consent.consent === 'A'">The attorneys can make decisions about life-sustaining treatment on behalf of the donor</div>
+        <div if="flow.data.consent.consent === 'B'">The attorneys are not allowed to make decisions about life-sustaining treatment on behalf of the donor</div>
         <div><a onclick="flow.deleteData('consent')">View/edit details</a></div>
       </div>
 
       <form>
         <h2>Do you want to give your attorneys the authority to make decisions about life-sustaining treatment on your behalf?</h2>
-        <div id="consent_consent">
-          <input type="radio" name="consent" value="A"/>&nbsp;I want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
-          <input type="radio" name="consent" value="B"/>&nbsp;I do not want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
-        </div>
+        <input type="radio" name="consent" value="A"/>&nbsp;I want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
+        <input type="radio" name="consent" value="B"/>&nbsp;I do not want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
         <input type="button" class="medium button" value="Save and continue"/>
-        <transition target="end" if="flow.data.consent.consent_consent === 'A'"/>
-        <transition target="end" if="flow.data.consent.consent_consent === 'B'"/>
+        <transition target="attorneys"/>
       </form>
     </div>
 

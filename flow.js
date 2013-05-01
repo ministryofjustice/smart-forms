@@ -94,7 +94,7 @@ var flow = (function () {
       spans = $("#"+blockId+" div.summary span");
       for (j=0; j<spans.length; j++) {
         span = $(spans[j]);
-        span.html(blockData[span.attr("id")]);
+        span.html(blockData[span.attr("data")]);
       }
       $(".summary").css("display","block");
 
@@ -109,11 +109,10 @@ var flow = (function () {
       if (validate.validateForm(blockId)) {
         // update data model
         flow.data[blockId] = {};
-        $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId][textarea.id] = textarea.value; });
-        $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId][text.id] = text.value; });
+        $("#"+blockId+" textarea").each(function(index, textarea) { flow.data[blockId][textarea.name] = textarea.value; });
+        $("#"+blockId+" input:text").each(function(index, text) { flow.data[blockId][text.name] = text.value; });
         $("#"+blockId+" input:radio:checked").each(function(index, radioButton) {
-          var radioButtonsDivId = $(radioButton).parent().attr("id");
-          flow.data[blockId][radioButtonsDivId] = $(radioButton).val();
+          flow.data[blockId][$(radioButton).attr("name")] = $(radioButton).val();
         });
         buildHistoryFromData();
         buildViewFromHistory();
