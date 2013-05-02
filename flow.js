@@ -96,8 +96,7 @@ var flow = (function () {
         span = $(spans[j]);
         span.html(blockData[span.attr("data")]);
       }
-      $(".summary").css("display","block");
-
+      $("#"+blockId+" div.summary").css("display","block");
     }
 
     // current state
