@@ -29,9 +29,9 @@ such as your diet, dress or daily routine.</p>
   </header>
 
     <!-- ================================================== -->
-    <hr/>
     <div class="block" id="start">
       <div class="summary">
+        <hr/>
         <div>The donor is <span data="title"></span> <span data="first_names"></span> <span data="last_name"></span></div>
         <div><a onclick="flow.deleteData('start')">View/edit details</a></div>
       </div>
@@ -59,9 +59,9 @@ such as your diet, dress or daily routine.</p>
     </div>
 
     <!-- ================================================== -->
-    <hr/>
     <div class="block" id="consent">
       <div class="summary">
+        <hr/>
         <div if="flow.data.consent.consent === 'A'">The attorneys can make decisions about life-sustaining treatment on behalf of the donor</div>
         <div if="flow.data.consent.consent === 'B'">The attorneys are not allowed to make decisions about life-sustaining treatment on behalf of the donor</div>
         <div><a onclick="flow.deleteData('consent')">View/edit details</a></div>
@@ -77,7 +77,6 @@ such as your diet, dress or daily routine.</p>
     </div>
 
     <!-- ================================================== -->
-    <hr/>
     <div class="block" id="end">
       <form>
         <h2>Thank you</h2>
