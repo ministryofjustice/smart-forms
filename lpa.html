@@ -38,17 +38,17 @@ such as your diet, dress or daily routine.</p>
       <form>
         <h2>About the person who is giving this lasting power of attorney</h2>
         <label>Title</label><br/>
-        <input name="title" type="text" value="Mr"/><br/>
+        <input name="title" type="text" value=""/><br/>
         <label>First names</label><br/>
-        <input name="first_names" type="text" value="Oliver"/><br/>
+        <input name="first_names" type="text" value=""/><br/>
         <label>Last name</label><br/>
-        <input name="last_name" type="text" value="Twist"/><br/>
+        <input name="last_name" type="text" value=""/><br/>
         <label>Date of birth (DD/MM/YYYY)</label><br/>
-        <input name="dob" type="text" class="valid-date" value="11/11/1111"/><br/>
+        <input name="dob" type="text" class="valid-date" value=""/><br/>
         <label>Address</label><br/>
-        <textarea name="address" cols="40" rows="5">11 Privet Drive</textarea><br/>
+        <textarea name="address" cols="40" rows="5"></textarea><br/>
         <label>Postcode</label><br/>
-        <input name="postcode" type="text" class="valid-postcode" value="WE3 3EW"/><br/>
+        <input name="postcode" type="text" class="valid-postcode" value=""/><br/>
         <label>Any other names you are known by in medical records or welfare records</label><br/>
         <input name="other_names" type="text" class="valid-optional"/>
         <div>
@@ -72,22 +72,37 @@ such as your diet, dress or daily routine.</p>
         <input type="radio" name="consent" value="A"/>&nbsp;I want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
         <input type="radio" name="consent" value="B"/>&nbsp;I do not want to give my attorneys authority to give or refuse consent to life-sustaining treatment on my behalf<br/>
         <input type="button" class="medium button" value="Save and continue"/>
-        <transition target="attorneys"/>
+        <transition target="attorney"/>
       </form>
     </div>
 
     <!-- ================================================== -->
-    <div class="block" id="attorneys">
+    <div class="block" id="attorney">
       <div class="summary">
         <hr/>
-        <ul>
-          <li>Name: <span data="last_name"/> <a href="">delete</a></li>
-        </ul>
+        <div>The attorney is <span data="title"></span> <span data="first_names"></span> <span data="last_name"></span></div>
+        <div><a onclick="flow.deleteData('attorney')">View/edit details</a></div>
       </div>
       <form>
-        <input type="button" class="medium button" value="Add an attorney"/>
-        <input type="button" class="medium button" value="Save and Continue"/>
-        <transition if="" target="attorneys"/>
+        <h2>About the person who is giving this lasting power of attorney</h2>
+        <label>Title</label><br/>
+        <input name="title" type="text" value=""/><br/>
+        <label>First names</label><br/>
+        <input name="first_names" type="text" value=""/><br/>
+        <label>Last name</label><br/>
+        <input name="last_name" type="text" value=""/><br/>
+        <label>Date of birth (DD/MM/YYYY)</label><br/>
+        <input name="dob" type="text" class="valid-date" value=""/><br/>
+        <label>Address</label><br/>
+        <textarea name="address" cols="40" rows="5"></textarea><br/>
+        <label>Postcode</label><br/>
+        <input name="postcode" type="text" class="valid-postcode" value=""/><br/>
+        <label>Any other names you are known by in medical records or welfare records</label><br/>
+        <input name="other_names" type="text" class="valid-optional"/>
+        <div>
+          <input type="button" class="medium button" value="Continue"/>
+        </div>
+        <transition target="end"></transition>
       </form>
     </div>
 
@@ -97,6 +112,8 @@ such as your diet, dress or daily routine.</p>
         <h2>Thank you</h2>
       </form>
     </div>
+
+    <!-- ================================================== -->
 
     <script src="jquery.js" type="application/javascript"></script>
     <script src="jquery-ui/ui/minified/jquery-ui.min.js" type="application/javascript"></script>
