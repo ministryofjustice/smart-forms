@@ -32,8 +32,8 @@ such as your diet, dress or daily routine.</p>
     <div class="block" id="start">
       <div class="summary">
         <hr/>
-        <div>The donor is <span data="title"></span> <span data="first_names"></span> <span data="last_name"></span></div>
-        <div><a onclick="flow.deleteData('start')">View/edit details</a></div>
+        <div>The donor is <em><span data="title"></span> <span data="first_names"></span> <span data="last_name"></span></em>.</div>
+        <div><a onclick="flow.deleteData('start')">Change</a></div>
       </div>
       <form>
         <h2>About the person who is giving this lasting power of attorney</h2>
@@ -64,7 +64,7 @@ such as your diet, dress or daily routine.</p>
         <hr/>
         <div if="flow.data.consent.consent === 'A'">The attorneys can make decisions about life-sustaining treatment on behalf of the donor</div>
         <div if="flow.data.consent.consent === 'B'">The attorneys are not allowed to make decisions about life-sustaining treatment on behalf of the donor</div>
-        <div><a onclick="flow.deleteData('consent')">View/edit details</a></div>
+        <div><a onclick="flow.deleteData('consent')">Change</a></div>
       </div>
 
       <form>
@@ -80,7 +80,7 @@ such as your diet, dress or daily routine.</p>
     <div class="block" id="attorney">
       <div class="summary">
         <hr/>
-        <div>The attorney is <span data="title"></span> <span data="first_names"></span> <span data="last_name"></span></div>
+        <div>The attorney is <em><span data="title"></span> <span data="first_names"></span> <span data="last_name"></span></em>.</div>
         <div><a onclick="flow.deleteData('attorney')">View/edit details</a></div>
       </div>
       <form>
@@ -110,6 +110,7 @@ such as your diet, dress or daily routine.</p>
     <div class="block" id="end">
       <form>
         <h2>Thank you</h2>
+        <p>Click <a href="#" onclick="alert(JSON.stringify(flow.data))">here</a> to see the data collected.</p>
       </form>
     </div>
 
